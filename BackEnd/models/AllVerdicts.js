@@ -15,6 +15,13 @@ const AllVirdicts = mongoose.Schema({
     status:{
         type:String,
         required:true,
+    },
+    filePath:{
+        type:String,
+        required:true
+    },
+    comment:{
+        type:String
     }
 });
-module.exports = mongoose.model("Virdicts",AllVirdicts);
+module.exports = mongoose.model("Verdicts",AllVirdicts);
