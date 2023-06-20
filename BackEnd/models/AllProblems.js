@@ -30,9 +30,13 @@ const AllProblems = new mongoose.Schema({
         default:0,
         required:true,
     },
-    createdBy:{
-        type:String,
+    createdByUserId:{
+        type:mongoose.Schema.Types.ObjectId,
         required:true,
+    },
+    createdByUserName:{
+        type:String,
+        required:true
     }
 })
 module.exports = mongoose.model("Problems",AllProblems)

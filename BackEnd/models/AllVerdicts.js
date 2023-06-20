@@ -12,6 +12,10 @@ const AllVirdicts = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:true
     },
+    userName:{
+        type:String,
+        required:true
+    },
     status:{
         type:String,
         required:true,

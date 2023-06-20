@@ -1,7 +1,9 @@
 import { useState } from "react" 
 import axios from "axios"
 import Loading from "./Loading";
+import {useSelector} from "react-redux";
 export default function Compiler({problemId}){
+    const user = useSelector(state=>state.userSlice)
     const [language,setLanguage] = useState("cpp");
     const [code,setCode] = useState("");
     const [input,setInput] = useState("");
@@ -30,12 +32,14 @@ export default function Compiler({problemId}){
             language,
             code,
             problemId,
-            userId:"648f43b9e24f556aaab9a06f",
+            userId:user.userId,
+            userName:user.userName
         };
         try{
             setIsLoading(true);
             let resp = await axios.post("http://localhost:5000/submitProblem",payload);
             const verdictId = resp.data._id;
+            console.log(resp.data);
             let a = setInterval(async()=>{
                 resp = await axios.post("http://localhost:5000/getStatus",{verdictId});
                 console.log(resp.data);
@@ -77,7 +81,10 @@ export default function Compiler({problemId}){
                 <textarea name="" id="" cols="30" rows="10" placeholder="Output" value = {output} onChange={e=>setOutput(e.target.value)} readOnly></textarea>
             </div>
             <button onClick={handleCodeRun} disabled = {code.length?false:true}>Run</button> {timeToExecute}<br /> {runLoading && <span>Loading</span>}
-            <button onClick={handleCodeSubmit} disabled = {code.length?false:true}>Submit</button>
+            {
+                user.userName!=="" && <button onClick={handleCodeSubmit} disabled = {code.length?false:true}>Submit</button>
+            }
+            
         </div>
     )
 }

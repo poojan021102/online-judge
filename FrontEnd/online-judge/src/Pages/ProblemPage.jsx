@@ -34,7 +34,7 @@ export default function ProblemPage(){
         <div>
             <h1>{problem.title}</h1>
             <Link to = {`/allSubmission/${id}`}>All Submissions</Link><br />
-            <Link>My Submission For This Problem</Link>
+            <Link to={`/mySubmission/${id}`}>My Submission For This Problem</Link>
             <p>{problem.description}</p>
             <p>{problem.constraints}</p>
             <textarea name="" id="" cols="30" rows="10" value={problem.sampleInput} readOnly>{problem.sampleInput}</textarea><br />
