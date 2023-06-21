@@ -119,6 +119,8 @@ app.post("/enterTestCases",async(req,res)=>{
         //     const n = new AllTestCases({problemId:req.body.problemId,input:obj[i].input,output:obj[i].output});
         //     await n.save();
         // }
+        const n = new AllTestCases({problemId:new mongoose.Types.ObjectId(req.body.problemId),testCases:obj});
+        n.save();
         fs.unlink(uploadPath,(err)=>{});
         return res.json({success:true});
     }
@@ -230,14 +232,15 @@ app.post("/submitProblem",async(req,res)=>{
         const problem = await AllProblems.findById(req.body.problemId);
         verdict.save();
         res.json(verdict);
-        const testCases = await AllTestCases.find({problemId:new mongoose.Types.ObjectId(req.body.problemId)});
-        for(let i = 0;i<testCases.length;++i){
+        let testCases = await AllTestCases.find({problemId:new mongoose.Types.ObjectId(req.body.problemId)});
+        testCases = testCases[0];
+        for(let i = 0;i<testCases.testCases.length;++i){
             
 
             if(req.body.language === 'cpp'){
                 const start = Date.now()
                 let obj = spawnSync(`g++ -o ${filePath.substr(0,filePath.length - 4)}.exe ${filePath}&${filePath.substr(0,filePath.length - 4)}.exe`,{
-                    input:testCases[i].input,encoding:'utf-8',shell:true
+                    input:testCases.testCases[i].input,encoding:'utf-8',shell:true
                 });
                 fs.unlink(`${filePath.substr(0,filePath.length-4)}.exe`,(err)=>{});
                 const end = Date.now();
@@ -258,7 +261,7 @@ app.post("/submitProblem",async(req,res)=>{
                     return;
                 }
                 else{
-                    if(obj.stdout !== testCases[i].output){
+                    if(obj.stdout !== testCases.testCases[i].output){
                         verdict.status = "success";
                         verdict.comment = `Wrong Answer on test case ${i + 1}`;
                         problem.wrongSubmission++;
@@ -270,7 +273,7 @@ app.post("/submitProblem",async(req,res)=>{
             }
             else if(language === 'c'){
                 let obj = spawnSync(`g++ -o ${filePath.substr(0,filePath.length - 2)}.exe ${filePath}&${filePath.substr(0,filePath.length - 2)}.exe`,{
-                    input:input,encoding:'utf-8',shell:true
+                    input:testCases.testCases[i].input,encoding:'utf-8',shell:true
                 });
                 fs.unlink(`${filePath.substr(0,filePath.length-2)}.exe`,(err)=>{});
                 if(obj.error){
@@ -286,7 +289,7 @@ app.post("/submitProblem",async(req,res)=>{
                     return;
                 }
                 else{
-                    if(obj.stdout !== testCases[i].output){
+                    if(obj.stdout !== testCases.testCases[i].output){
                         verdict.status = "success";
                         verdict.comment = `Wrong Answer on test case ${i + 1}`;
                         verdict.save();
@@ -295,7 +298,7 @@ app.post("/submitProblem",async(req,res)=>{
                 }
             }
             else if(language === 'py'){
-                let obj = spawnSync(`python ${filePath}`,[],{input:input,encoding:'utf-8',shell:true})
+                let obj = spawnSync(`python ${filePath}`,[],{input:testCases.testCase[i].input,encoding:'utf-8',shell:true})
                 fs.unlink(filePath,(err)=>{});
                 if(obj.error){
                     verdict.status = "success";
@@ -310,7 +313,7 @@ app.post("/submitProblem",async(req,res)=>{
                     return;
                 }
                 else{
-                    if(obj.stdout !== testCases[i].output){
+                    if(obj.stdout !== testCases.testCases[i].output){
                         verdict.status = "success";
                         verdict.comment = `Wrong Answer on test case ${i + 1}`;
                         verdict.save();

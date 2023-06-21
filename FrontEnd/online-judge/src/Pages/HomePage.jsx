@@ -19,7 +19,7 @@ export default function HomePage(){
         fetchAllProblems();
     },[])
     return(
-        <div>
+        <div style = {{width:"100%",marginTop:"20px"}}>
             {
                 allProblems.map((problem,index)=>{
                     return <ProblemPoster key = {index} title = {problem.title} id={problem._id} correctSubmission = {problem.correctSubmission} wrongSubmission = {problem.wrongSubmission}/>
