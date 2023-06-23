@@ -102,7 +102,7 @@ export default function Navbar(){
                     </Link>
                 </Grid>
                 <Grid item xs = {12} sm = {4} md = {3} align = "center">
-                    <Link>
+                    <Link to = "/myAllSubmission">
                         <Button variant="filled" color="warning">
                             My All Submissions
                         </Button>
@@ -117,7 +117,7 @@ export default function Navbar(){
         )
     }
     return(
-        <Box sx = {{bgcolor:"#cfd8dc", padding:"5px"}}>
+        <Box sx = {{bgcolor:"#cfd8dc", padding:"5px",position:"sticky",top:"0",zIndex:"100"}}>
             {
                 user.userName === ""?(showWithoutLogin()):showWithLogin()
             }

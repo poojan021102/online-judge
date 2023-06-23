@@ -1,8 +1,8 @@
-import { useNavigate, useParams } from "react-router-dom"
 import { useEffect,useState } from "react";
+import {useSelector} from "react-redux"
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FileDownload from "js-file-download";
-import { useSelector } from "react-redux";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,12 +15,11 @@ import Chip from '@mui/material/Chip';
 import Box from "@mui/material/Box"
 import DownloadIcon from '@mui/icons-material/Download';
 import LinearProgress from "@mui/material/LinearProgress"
-export default function MySubmissionPage(){
-    const {id} = useParams();
+export default function MyAllSubmission(){
+    const user = useSelector(state=>state.userSlice);
     const [info,setInfo] = useState([]);
     const navigate = useNavigate();
     const [isLoading,setIsLoading] = useState(false);
-    const user = useSelector(state=>state.userSlice)
     const handleDownloadFile=async(e,filePath)=>{
         e.preventDefault();
         try{
@@ -29,7 +28,7 @@ export default function MySubmissionPage(){
             });
             let i = filePath.length;
             while(i >= 0 && filePath[i] != '.')--i;
-            FileDownload(resp.data,`code${filePath.substr(i)}`);
+            FileDownload(resp.data,`code.${filePath.substr(i)}`);
         }
         catch(err){
             console.log(err);
@@ -37,15 +36,14 @@ export default function MySubmissionPage(){
         
     }
     useEffect(()=>{
-        if(user.userName === ""){
-            navigate("/login");
+        if(user.userName.length === 0){
+            navigate("/");
         }
         else{
             const fetchInformation = async()=>{
                 setIsLoading(true);
                 try{
-                    const resp = await axios.post("http://localhost:5000/mySubmissionForTheProblem",{
-                        problemId:id,
+                    const resp = await axios.post("http://localhost:5000/myAllSubmission",{
                         userId:user.userId
                     });
                     for(let i = resp.data.length - 1;i >= 0;--i){
@@ -55,14 +53,13 @@ export default function MySubmissionPage(){
                 catch(err){
                     console.log(err)
                 }
+                setIsLoading(false);
             }
             fetchInformation();
-            setIsLoading(false);
         }
     },[]);
     return(
-        <>
-            <TableContainer component = {Paper}>
+        <TableContainer component = {Paper}>
             {
                 isLoading &&<Box sx ={{width:"100%",position:"fixed",top:"0px"}}>
                                 <LinearProgress color="primary"/>
@@ -102,6 +99,23 @@ export default function MySubmissionPage(){
             }
             </Table>
         </TableContainer>
-        </>
     )
 }
+{/* <table>
+    <thead>
+        <td>User Name</td>
+        <td>Comment</td>
+        <td>Code</td>
+    </thead>
+    {
+        info.map((item,index)=>{
+            return (
+                <tr key = {index}>
+                    <td>{item.userName}</td>
+                    <td>{item.comment}</td>
+                    <td><button onClick={(e)=>handleDownloadFile(e,item.filePath)}>Download</button></td>
+                </tr>
+            )
+        })
+    }
+</table> */}

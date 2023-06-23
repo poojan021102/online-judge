@@ -26,6 +26,10 @@ const AllVirdicts = mongoose.Schema({
     },
     comment:{
         type:String
+    },
+    language:{
+        type:String,
+        required:true
     }
 });
 module.exports = mongoose.model("Verdicts",AllVirdicts);
