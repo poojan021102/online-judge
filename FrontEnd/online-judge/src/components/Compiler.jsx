@@ -28,12 +28,31 @@ export default function Compiler({ problemId }) {
       code,
       input,
     };
-    setRunLoading(true);
-    const a = await axios.post("http://localhost:5000/runCode", payload);
-    if (a.data.stdout) setOutput(a.data.stdout);
-    if (a.data.stderr) setOutput(a.data.stderr);
-    setRunLoading(false);
-    setTimeToExecute(`${a.data.time} Seconds`);
+    try{
+      setRunLoading(true);
+      let resp = await axios.post("http://localhost:5000/runCode",{
+        language,code,input
+      });
+      let id = resp.data._id;
+      if(resp.data._id){
+        let a = setInterval(async () => {
+          resp = await axios.post("http://localhost:5000/getRunStatus", {
+            id
+          });
+          // console.log(resp.data);
+          if (resp.data.status) {
+            setOutput(resp.data.message);
+            setRunLoading(false);
+            clearInterval(a);
+          }
+        }, 1000);
+      }
+    }
+    catch(err){
+      setRunLoading(false);
+      setOutput("");
+    }
+    
   };
   const handleCodeSubmit = async (e) => {
       e.preventDefault();
