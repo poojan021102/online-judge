@@ -20,7 +20,7 @@ const AllVirdicts = mongoose.Schema({
         type:String,
         required:true,
     },
-    filePath:{
+    code:{
         type:String,
         required:true
     },

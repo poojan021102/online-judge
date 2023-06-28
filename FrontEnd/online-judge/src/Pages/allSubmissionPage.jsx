@@ -18,15 +18,13 @@ export default function AllSubmission(){
     const {id} = useParams();
     const [info,setInfo] = useState([]);
     const [isLoading,setIsLoading] = useState(false);
-    const handleDownloadFile=async(e,filePath)=>{
+    const handleDownloadFile=async(e,id,lang)=>{
         e.preventDefault();
         try{
             const resp = await axios.post("http://localhost:5000/downloadFile",{
-                filePath
+                id
             });
-            let i = filePath.length;
-            while(i >= 0 && filePath[i] != '.')--i;
-            FileDownload(resp.data,`code.${filePath.substr(i)}`);
+            FileDownload(resp.data,`code.${lang}`);
         }
         catch(err){
             console.log(err);
@@ -79,7 +77,7 @@ export default function AllSubmission(){
                                 </TableCell>
                                 <TableCell align = "center">{item.comment}</TableCell>
                                 <TableCell align = "center">
-                                    <Button startIcon = {<DownloadIcon/>} variant = "contained" size = "small" color="secondary" onClick={(e)=>handleDownloadFile(e,item.filePath)}>
+                                    <Button startIcon = {<DownloadIcon/>} variant = "contained" size = "small" color="secondary" onClick={(e)=>handleDownloadFile(e,item._id,item.language)}>
                                         Download
                                     </Button>
                                 </TableCell>
