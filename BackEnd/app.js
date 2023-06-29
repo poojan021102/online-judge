@@ -51,7 +51,7 @@ app.post("/getRunStatus",async(req,res)=>{
     }
   }
   catch(err){
-    return res.json({status:true,message:"Internal Server error"});
+    return res.json({status:true,message:"Internal Server Code removed"});
   }
 })
 
@@ -356,7 +356,7 @@ app.post("/runCode", async (req, res) => {
       const { language = "cpp", code, input } = req.body;
 
       if (code === undefined) {
-        return res.status(400).json({ success: false, error: "Empty code body" });
+        return res.json({ success: true, message: "Empty code body" });
       }
       filePath = await generateFile(language, code);
       codeVerdict = await allCodeVeridct.create({

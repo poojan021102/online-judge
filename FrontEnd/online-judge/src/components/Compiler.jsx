@@ -45,7 +45,7 @@ export default function Compiler({ problemId }) {
             setRunLoading(false);
             clearInterval(a);
           }
-        }, 1000);
+        }, 1500);
       }
     }
     catch(err){
