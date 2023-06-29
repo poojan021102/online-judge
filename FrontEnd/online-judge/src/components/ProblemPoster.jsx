@@ -16,7 +16,7 @@ export default function ProblemPoster({title,id,correctSubmission,wrongSubmissio
                 <Grid container>
                     <Grid item xl = {6} sm = {6} xs = {12}>
                         <Typography variant="h6" sx = {{paddingBottom:"20px",display:"flex",justifyContent:"center",alignItems:"center"}}>
-                            {Math.round((correctSubmission === 0)?(0):(wrongSubmission === 0?(100):(correctSubmission/(wrongSubmission + correctSubmission))*100))}%
+                            Success Rate: {Math.round((correctSubmission === 0)?(0):(wrongSubmission === 0?(100):(correctSubmission/(wrongSubmission + correctSubmission))*100))}%
                         </Typography>
                     </Grid>
                     <Grid item xl = {6} xs = {12} sm={6} sx = {{display:"flex",justifyContent:"center",paddingBottom:"20px",alignItems:"center"}}>

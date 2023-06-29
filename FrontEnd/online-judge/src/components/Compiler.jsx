@@ -104,9 +104,9 @@ export default function Compiler({ problemId }) {
   };
   return (
     <Box
-        sx = {{
-            border:"2px solid black"
-        }}
+        // sx = {{
+        //     border:"2px solid black"
+        // }}
     >
         <InputLabel id="demo-select-small-label">Language</InputLabel>
       <Select
