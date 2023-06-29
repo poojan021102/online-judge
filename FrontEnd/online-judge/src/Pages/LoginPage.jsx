@@ -27,12 +27,12 @@ export default function LoginPage(){
         }
         try{
             setIsLoading(true);
-            const resp = await axios.post("http://localhost:5000/login",{
+            const resp = await axios.post("https://online-judge-5bu5.onrender.com/login",{
                 userName,password
             });
             if(resp.data.success){
                 localStorage.setItem("online-judge-token",resp.data.token);
-                const u = await axios.post("http://localhost:5000/getUser",{token:resp.data.token});
+                const u = await axios.post("https://online-judge-5bu5.onrender.com/getUser",{token:resp.data.token});
                 dispatch(login({
                     firstName:u.data.firstName,
                     lastName:u.data.lastName,
@@ -56,17 +56,17 @@ export default function LoginPage(){
     }
     return(
         <Box sx = {{width:"100%",height:"100vh",bgcolor:"#81d4fa",display:"flex",justifyContent:"center",alignItems:'center',flexDirection:"column"}}>
+            {
+                isLoading&&<Box sx ={{width:"40vw",position:"sticky"}}>
+                                <LinearProgress color="primary"/>
+                            </Box>
+            }
             <Box sx = {{width:"40vw",height:"50vh",bgcolor:"white",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",borderRadius:"5px",
             transition: "transform .5s, box-shadow 0.5s",
             "&:hover":{
                 boxShadow: "5px 5px 5px rgba(60, 60, 93, 0.33)"
             }
         }}>
-            {
-                isLoading &&<Box sx ={{width:"100%",position:"fixed",top:"0px"}}>
-                                <LinearProgress color="primary"/>
-                            </Box>
-            }
                 
 
             <Typography variant="h5" sx = {{fontWeight:"bolder"}}>Log In</Typography>

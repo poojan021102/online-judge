@@ -24,7 +24,7 @@ export default function Navbar(){
         if(token){
             const fetchInfo = async()=>{
                 try{
-                    const u = await axios.post("http://localhost:5000/getUser",{token});
+                    const u = await axios.post("https://online-judge-5bu5.onrender.com/getUser",{token});
                     dispatch(login({
                         firstName:u.data.firstName,
                         lastName:u.data.lastName,

@@ -21,7 +21,7 @@ export default function AllSubmission(){
     const handleDownloadFile=async(e,id,lang)=>{
         e.preventDefault();
         try{
-            const resp = await axios.post("http://localhost:5000/downloadFile",{
+            const resp = await axios.post("https://online-judge-5bu5.onrender.com/downloadFile",{
                 id
             });
             FileDownload(resp.data,`code.${lang}`);
@@ -34,7 +34,7 @@ export default function AllSubmission(){
     useEffect(()=>{
         const fetchInformation = async()=>{
             try{
-                const resp = await axios.post("http://localhost:5000/allSubmission",{
+                const resp = await axios.post("https://online-judge-5bu5.onrender.com/allSubmission",{
                     problemId:id
                 });
                 for(let i = resp.data.length - 1;i >= 0;--i){
@@ -50,7 +50,7 @@ export default function AllSubmission(){
     return(
         <TableContainer component = {Paper}>
             {
-                isLoading &&<Box sx ={{width:"100%",position:"fixed",top:"0px"}}>
+                isLoading&&<Box sx ={{width:"100%",position:"sticky",top:"0px"}}>
                                 <LinearProgress color="primary"/>
                             </Box>
             }

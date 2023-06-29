@@ -25,7 +25,7 @@ export default function ProblemPage(){
         const fetchInformation = async()=>{
             try{
                 setIsLoading(true);
-                const resp = await axios.post("http://localhost:5000/getProblem",{id});
+                const resp = await axios.post("https://online-judge-5bu5.onrender.com/getProblem",{id});
                 if(resp.data.err){
 
                 }
@@ -58,22 +58,27 @@ export default function ProblemPage(){
 
 <Box
         sx={{
-          width: "90vw",
-        //   height: "100vh",
-          bgcolor: "white",
-          margin:"30px",
-          padding:"20px",
-        //   display: "flex",
-        //   flexDirection: "column",
-        //   justifyContent: "left",
-          alignItems: "center",
-          borderRadius: "5px",
-          transition: "transform .5s, box-shadow 0.5s",
-          "&:hover": {
-            boxShadow: "5px 5px 5px rgba(60, 60, 93, 0.33)",
-          },
+            width: "90vw",
+            //   height: "100vh",
+            bgcolor: "white",
+            margin:"30px",
+            padding:"20px",
+            //   display: "flex",
+            //   flexDirection: "column",
+            //   justifyContent: "left",
+            alignItems: "center",
+            borderRadius: "5px",
+            transition: "transform .5s, box-shadow 0.5s",
+            "&:hover": {
+                boxShadow: "5px 5px 5px rgba(60, 60, 93, 0.33)",
+            },
         }}
         >
+            { isLoading && (
+            <Box sx={{ width: "90vw", position: "sticky", top: "0px" }}>
+                <LinearProgress color="primary" />
+            </Box>
+            )}
             <Grid container>
                 <Grid item sm = {6} md = {6} xl = {6} xs = {12}>
                     <Typography variant="h4" sx = {{fontWeight:"bolder"}}>{problem.title}</Typography>
@@ -115,11 +120,7 @@ export default function ProblemPage(){
             <hr />
             <Compiler problemId={id}/>
         </Box>
-            {isLoading && (
-            <Box sx={{ width: "100%", position: "fixed", top: "0px" }}>
-                <LinearProgress color="primary" />
-            </Box>
-            )}
+            
         </Box>
     )
     }

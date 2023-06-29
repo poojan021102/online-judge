@@ -10,7 +10,7 @@ export default function HomePage(){
         const fetchAllProblems = async()=>{
             try{
                 setIsLoading(true);
-                const resp = await axios.get("http://localhost:5000/AllProblems");
+                const resp = await axios.get("https://online-judge-5bu5.onrender.com/AllProblems");
                 if(resp.data.err)return;
                 for(let i = 0;i < resp.data.length;++i){
                     setAllProblems(prev=>[...prev,resp.data[i]]);
@@ -27,7 +27,7 @@ export default function HomePage(){
     return(
         <div style = {{width:"100%",marginTop:"20px"}}>
              {
-                isLoading &&<Box sx ={{width:"100%",position:"fixed",top:"0px"}}>
+                isLoading &&<Box sx ={{width:"100%",position:"sticky"}}>
                                 <LinearProgress color="primary"/>
                             </Box>
             }

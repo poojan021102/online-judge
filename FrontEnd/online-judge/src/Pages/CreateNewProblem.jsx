@@ -44,7 +44,7 @@ export default function CreateNewProblem() {
         setIsLoading(true);
         let formData = new FormData();
         formData.append("testCases", file);
-        const resp = await axios.post("http://localhost:5000/createNewProblem", {
+        const resp = await axios.post("https://online-judge-5bu5.onrender.com/createNewProblem", {
             title,
             description,
             sampleOutput,
@@ -55,7 +55,7 @@ export default function CreateNewProblem() {
         });
         formData.append("problemId", resp.data._id);
         const resp2 = await axios.post(
-            "http://localhost:5000/enterTestCases",
+            "https://online-judge-5bu5.onrender.com/enterTestCases",
             formData,
             {
             headers: {
@@ -107,7 +107,7 @@ export default function CreateNewProblem() {
         }}
       >
         {isLoading && (
-          <Box sx={{ width: "100%", position: "fixed", top: "0px" }}>
+          <Box sx={{ width: "100%", position: "sticky", top: "0px" }}>
             <LinearProgress color="primary" />
           </Box>
         )}

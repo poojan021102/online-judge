@@ -30,13 +30,13 @@ export default function Compiler({ problemId }) {
     };
     try{
       setRunLoading(true);
-      let resp = await axios.post("http://localhost:5000/runCode",{
+      let resp = await axios.post("https://online-judge-5bu5.onrender.com/runCode",{
         language,code,input
       });
       let id = resp.data._id;
       if(resp.data._id){
         let a = setInterval(async () => {
-          resp = await axios.post("http://localhost:5000/getRunStatus", {
+          resp = await axios.post("https://online-judge-5bu5.onrender.com/getRunStatus", {
             id
           });
           // console.log(resp.data);
@@ -67,13 +67,13 @@ export default function Compiler({ problemId }) {
     try {
       setRunLoading(true);
       let resp = await axios.post(
-        "http://localhost:5000/submitProblem",
+        "https://online-judge-5bu5.onrender.com/submitProblem",
         payload
       );
       const verdictId = resp.data._id;
     //   console.log(resp.data);
       let a = setInterval(async () => {
-        resp = await axios.post("http://localhost:5000/getStatus", {
+        resp = await axios.post("https://online-judge-5bu5.onrender.com/getStatus", {
           verdictId,
         });
         // console.log(resp.data);
