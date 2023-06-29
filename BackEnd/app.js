@@ -51,7 +51,7 @@ app.post("/getRunStatus",async(req,res)=>{
     }
   }
   catch(err){
-    return res.json({status:true,message:"Internal Server Code removed"});
+    return res.json({status:true,message:"Internal Server Error Please Try again!!!"});
   }
 })
 
@@ -1004,7 +1004,6 @@ app.post("/submitProblem", async (req, res) => {
       language: req.body.language,
       userName: req.body.userName,
     });
-    // console.log(verdict)
 
     verdictId = verdict._id.toString();
     let promise = new Promise(async (resolve, reject) => {
@@ -1024,7 +1023,7 @@ app.post("/submitProblem", async (req, res) => {
               `g++ -o ${filePath.substr(
                 0,
                 filePath.length - 4
-              )} ${filePath}&${filePath.substr(
+              )} ${filePath}&&${filePath.substr(
                 0,
                 filePath.length - 4
               )}`,
@@ -1037,12 +1036,12 @@ app.post("/submitProblem", async (req, res) => {
             fs.unlink(
               `${filePath.substr(0, filePath.length - 4)}`,
               (err) => {}
-            );
-            const end = Date.now();
-            if (obj.error) {
+              );
+              const end = Date.now();
+              if (obj.error) {
               verdict = await AllVirdicts.findByIdAndUpdate(verdictId, {
                 status: "error",
-                comment: "Compilation Error",
+                comment: obj.error,
               });
               problem = await AllProblems.findByIdAndUpdate(
                 req.body.problemId,
@@ -1056,7 +1055,7 @@ app.post("/submitProblem", async (req, res) => {
             } else if (obj.stderr !== "") {
               verdict = await AllVirdicts.findByIdAndUpdate(verdictId, {
                 status: "error",
-                comment: "Compilation Error",
+                comment: obj.stderr,
               });
               problem = await AllProblems.findByIdAndUpdate(
                 req.body.problemId,
@@ -1106,7 +1105,7 @@ app.post("/submitProblem", async (req, res) => {
             if (obj.error) {
               verdict = await AllVirdicts.findByIdAndUpdate(verdictId, {
                 status: "error",
-                comment: "Compilation Error",
+                comment: obj.error,
               });
               problem = await AllProblems.findByIdAndUpdate(
                 req.body.problemId,
@@ -1120,7 +1119,7 @@ app.post("/submitProblem", async (req, res) => {
             } else if (obj.stderr !== "") {
               verdict = await AllVirdicts.findById(verdictId, {
                 status: "error",
-                comment: "Compilation Error",
+                comment: obj.error,
               });
               problem = await AllProblems.findByIdAndUpdate(
                 req.body.problemId,
@@ -1158,7 +1157,7 @@ app.post("/submitProblem", async (req, res) => {
             if (obj.error) {
               verdict = await AllVirdicts.findByIdAndUpdate(verdictId, {
                 status: "error",
-                comment: "Compilation Error",
+                comment: obj.error,
               });
               problem = await AllProblems.findByIdAndUpdate(
                 req.body.problemId,
@@ -1172,7 +1171,7 @@ app.post("/submitProblem", async (req, res) => {
             } else if (obj.stderr !== "") {
               verdict = await AllVirdicts.findByIdAndUpdate(verdictId, {
                 status: "error",
-                comment: "Compilation Error",
+                comment: obj.stderr,
               });
               problem = await AllProblems.findByIdAndUpdate(
                 req.body.problemId,

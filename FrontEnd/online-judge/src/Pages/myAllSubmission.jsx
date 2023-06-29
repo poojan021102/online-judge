@@ -49,11 +49,12 @@ export default function MyAllSubmission(){
                     for(let i = resp.data.length - 1;i >= 0;--i){
                         setInfo(pre=>[...pre,resp.data[i]]);
                     }
+                    setIsLoading(false);
                 }
                 catch(err){
+                    setIsLoading(false);
                     console.log(err)
                 }
-                setIsLoading(false);
             }
             fetchInformation();
         }

@@ -24,7 +24,7 @@ export default function MySubmissionPage(){
     const handleDownloadFile=async(e,id,lang)=>{
         e.preventDefault();
         try{
-            const resp = await axios.post("https://online-judge-5bu5.onrender.com/downloadFile",{
+            const resp = await axios.post("http://localhost:5000/downloadFile",{
                 id
             });
             FileDownload(resp.data,`code.${lang}`);
@@ -42,7 +42,7 @@ export default function MySubmissionPage(){
             const fetchInformation = async()=>{
                 setIsLoading(true);
                 try{
-                    const resp = await axios.post("https://online-judge-5bu5.onrender.com/mySubmissionForTheProblem",{
+                    const resp = await axios.post("http://localhost:5000/mySubmissionForTheProblem",{
                         problemId:id,
                         userId:user.userId
                     });
@@ -57,6 +57,7 @@ export default function MySubmissionPage(){
                 }
             }
             fetchInformation();
+            
         }
     },[]);
     return(
