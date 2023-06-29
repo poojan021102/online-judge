@@ -43,7 +43,7 @@ app.post("/getRunStatus",async(req,res)=>{
   try{
     const a = await allCodeVeridct.findById(req.body.id);
     if(a.status){
-      await allCodeVeridct.findByIdAndDelete(req.body.id);
+      // await allCodeVeridct.findByIdAndDelete(req.body.id);
       return res.json(a);
     }
     else{
