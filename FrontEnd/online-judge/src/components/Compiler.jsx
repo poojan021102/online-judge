@@ -35,17 +35,26 @@ export default function Compiler({ problemId }) {
       });
       let id = resp.data._id;
       if(resp.data._id){
-        let a = setInterval(async () => {
+        // let a = setInterval(async () => {
+        //   resp = await axios.post("https://online-judge-5bu5.onrender.com/getRunStatus", {
+        //     id
+        //   });
+        //   // console.log(resp.data);
+        //   if (resp.data.status) {
+        //     setOutput(resp.data.message);
+        //     setRunLoading(false);
+        //     clearInterval(a);
+        //   }
+        // }, 1500);
+        resp = {data:{status:false}};
+        while(resp.data.status === false){
           resp = await axios.post("https://online-judge-5bu5.onrender.com/getRunStatus", {
             id
           });
-          // console.log(resp.data);
-          if (resp.data.status) {
-            setOutput(resp.data.message);
-            setRunLoading(false);
-            clearInterval(a);
-          }
-        }, 1500);
+        }
+        setOutput(resp.data.message);
+        setRunLoading(false);
+        clearInterval(a);
       }
     }
     catch(err){
