@@ -54,7 +54,6 @@ export default function Compiler({ problemId }) {
         }
         setOutput(resp.data.message);
         setRunLoading(false);
-        clearInterval(a);
       }
     }
     catch(err){
