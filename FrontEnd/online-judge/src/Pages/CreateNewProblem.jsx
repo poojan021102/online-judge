@@ -11,6 +11,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal"
 import Button from "@mui/material/Button";
+import FileDownload from "js-file-download";
 export default function CreateNewProblem() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -27,6 +28,17 @@ export default function CreateNewProblem() {
         if(user.userName.length === 0)navigate("/");
     },[]);
 
+    const handleDownloadFile=async(e)=>{
+      e.preventDefault();
+      try{
+          const resp = await axios.get("https://online-judge-5bu5.onrender.com/downloadSampleTestCaseFile");
+          FileDownload(resp.data,`test.json`);
+      }
+      catch(err){
+          console.log(err);
+      }
+      
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -136,6 +148,9 @@ export default function CreateNewProblem() {
             </Button>
         </Stack>
       </Box>
+        <Button variant="contained" size="small" onClick={handleDownloadFile}>
+          Download Sample Test Case File
+        </Button>
       <Modal
         open={openModal}
         onClose={() => setOpenModal(false)}

@@ -39,6 +39,11 @@ app.post("/getProblem", async (req, res) => {
   }
 });
 
+app.get("/downloadSampleTestCaseFile",async(req,res)=>{
+  let p = path.join(__dirname,"test.json");
+  res.download(p,err=>{});
+})
+
 app.post("/getRunStatus",async(req,res)=>{
   try{
     const a = await allCodeVeridct.findById(req.body.id);
