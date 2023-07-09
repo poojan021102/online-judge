@@ -119,7 +119,7 @@ export default function Navbar(){
     return(
         <Box sx = {{bgcolor:"#cfd8dc", padding:"5px",position:"sticky",top:"0",zIndex:"100"}}>
             {
-                user.userName === ""?(showWithoutLogin()):showWithLogin()
+                (!user || !user.userName || !user.userName.length)?(showWithoutLogin()):showWithLogin()
             }
         </Box>
     )

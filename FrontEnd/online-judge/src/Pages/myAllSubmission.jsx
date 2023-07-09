@@ -36,7 +36,7 @@ export default function MyAllSubmission(){
         
     }
     useEffect(()=>{
-        if(user.userName.length === 0){
+        if(!user || !user.userName || !user.userName.length){
             navigate("/");
         }
         else{

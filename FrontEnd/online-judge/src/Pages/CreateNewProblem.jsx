@@ -25,7 +25,7 @@ export default function CreateNewProblem() {
   const [openModal,setOpenModal] = useState(false);
   const [message,setMessage] = useState("");
   useEffect(() => {
-        if(user.userName.length === 0)navigate("/");
+        if(!user || !user.userName || !user.userName.length)navigate("/");
     },[]);
 
     const handleDownloadFile=async(e)=>{

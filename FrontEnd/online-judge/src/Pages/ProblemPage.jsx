@@ -8,7 +8,6 @@ import axios from "axios"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField";
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from "@mui/material/Grid";
 export default function ProblemPage(){
     const {id} = useParams();

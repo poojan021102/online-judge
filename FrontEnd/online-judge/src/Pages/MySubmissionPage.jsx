@@ -35,7 +35,7 @@ export default function MySubmissionPage(){
         
     }
     useEffect(()=>{
-        if(user.userName === ""){
+        if(!user || !user.userName || !user.userName.length){
             navigate("/login");
         }
         else{

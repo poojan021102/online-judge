@@ -16,18 +16,18 @@ export default function Compiler({ problemId }) {
   const [code, setCode] = useState("");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
-  const [timeToExecute, setTimeToExecute] = useState("");
+  // const [timeToExecute, setTimeToExecute] = useState("");
   const [verdict, setVerdict] = useState();
   const [isCorrect,setIsCorrect] = useState(-1);
   const [runLoading, setRunLoading] = useState(false);
   const handleCodeRun = async (e) => {
     e.preventDefault();
     setIsCorrect(-1);
-    const payload = {
-      language,
-      code,
-      input,
-    };
+    // const payload = {
+    //   language,
+    //   code,
+    //   input,
+    // };
     try{
       setRunLoading(true);
       let resp = await axios.post("https://online-judge-5bu5.onrender.com/runCode",{
@@ -171,7 +171,7 @@ export default function Compiler({ problemId }) {
             </Button>
         </Grid>
         <Grid align = "center" item md = {6} sm = {6} xs = {12} xl = {12}>
-            <Button sx = {{margin:"5px"}} disabled = {(code.length && user.userName.length)?false:true} onClick={handleCodeSubmit} variant="contained" color="secondary">
+            <Button sx = {{margin:"5px"}} disabled = {(code.length && user && user.userName && user.userName.length)?false:true} onClick={handleCodeSubmit} variant="contained" color="secondary">
                 Submit
             </Button>
         </Grid>
